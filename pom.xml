@@ -112,6 +112,7 @@
 		<finalName>maven-web-app</finalName>
 		
 		<plugins>
+			<jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>

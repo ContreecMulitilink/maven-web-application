@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: tesla-app
+  name: tesla-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tesla-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tesla-app
+    spec:
+      containers:
+      - image: igbasanmi/tesla-web-app
+        name: tesla
+        resources: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: tesla-app
+  name: tesla-svc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: tesla-app
+  type: NodePort

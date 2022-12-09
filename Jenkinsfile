@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
     tools {
         maven "maven3.8.6"
     }
@@ -10,6 +10,9 @@ pipeline {
 
     stages {
         stage('codeCheckout') {
+            agent {
+              label 'master'
+            }
             steps {
                 echo 'checking out code'
                 git 'https://github.com/ContreecMulitilink/maven-web-application.git'
@@ -17,6 +20,9 @@ pipeline {
         }
     
         stage('Build') {
+            agent {
+              label 'master'
+            }
             steps {
                 echo 'building bytecode'
                 sh "mvn clean package"
@@ -31,6 +37,9 @@ pipeline {
         // }
         
         stage('ImageBuild') {
+            agent {
+              label 'test'
+            }
             steps {
                 echo 'building docker image'
                 echo "my build number is ${env.BUILD_NUMBER}"
@@ -38,25 +47,31 @@ pipeline {
             }
         }
         
-        stage('UploadImage') {
-            steps {
-                // sh 'echo "SSH user is $DOCKER_CREDS_USR"'
-                // sh 'echo "SSH passphrase is $SSH_CREDS_PSW"'
-                // echo 'uploading image to registry'
-                sh "docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}"
-                sh "docker push igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
-            }
+//         stage('UploadImage') {
+//             agent {
+//               label 'test'
+//             }
+//             steps {
+//                 // sh 'echo "SSH user is $DOCKER_CREDS_USR"'
+//                 // sh 'echo "SSH passphrase is $SSH_CREDS_PSW"'
+//                 // echo 'uploading image to registry'
+//                 sh "docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}"
+//                 sh "docker push igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
+//             }
             
-            post {
-              always {
-                sh 'docker logout'
-                sh "docker rmi igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
-                cleanWs()
-              }
-            }
-        }
+//             post {
+//               always {
+//                 sh 'docker logout'
+//                 sh "docker rmi igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
+//                 cleanWs()
+//               }
+//             }
+//         }
         
         stage('deploy2kubernetes') {
+            agent {
+              label 'test'
+            }
             steps {
                 echo "deploying to k8s"
                 sh "kubectl get pods -A"

@@ -19,53 +19,53 @@ pipeline {
             }
         }
     
-        stage('Build') {
-            agent {
-              label 'master'
-            }
-            steps {
-                echo 'building bytecode'
-                sh "mvn clean package"
-            }
-        }
+//         stage('Build') {
+//             agent {
+//               label 'master'
+//             }
+//             steps {
+//                 echo 'building bytecode'
+//                 sh "mvn clean package"
+//             }
+//         }
         
-        // stage('CodeQuality') {
-        //     steps {
-        //         echo 'code quality inspection'
-        //         sh "mvn sonar:sonar"
-        //     }
-        // }
+//         // stage('CodeQuality') {
+//         //     steps {
+//         //         echo 'code quality inspection'
+//         //         sh "mvn sonar:sonar"
+//         //     }
+//         // }
         
-        stage('ImageBuild') {
-            agent {
-              label 'master'
-            }
-            steps {
-                echo 'building docker image'
-                echo "my build number is ${env.BUILD_NUMBER}"
-                sh "docker build -t igbasanmi/tesla-web-app:${env.BUILD_NUMBER} ."
-            }
-        }
+//         stage('ImageBuild') {
+//             agent {
+//               label 'master'
+//             }
+//             steps {
+//                 echo 'building docker image'
+//                 echo "my build number is ${env.BUILD_NUMBER}"
+//                 sh "docker build -t igbasanmi/tesla-web-app:${env.BUILD_NUMBER} ."
+//             }
+//         }
         
-        stage('UploadImage') {
-            agent {
-              label 'master'
-            }
-            steps {
-                // sh 'echo "SSH user is $DOCKER_CREDS_USR"'
-                // sh 'echo "SSH passphrase is $SSH_CREDS_PSW"'
-                // echo 'uploading image to registry'
-                sh "docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}"
-                sh "docker push igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
-            }
+//         stage('UploadImage') {
+//             agent {
+//               label 'master'
+//             }
+//             steps {
+//                 // sh 'echo "SSH user is $DOCKER_CREDS_USR"'
+//                 // sh 'echo "SSH passphrase is $SSH_CREDS_PSW"'
+//                 // echo 'uploading image to registry'
+//                 sh "docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}"
+//                 sh "docker push igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
+//             }
             
-            post {
-              always {
-                sh 'docker logout'
-                sh "docker rmi igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
-              }
-            }
-        }
+//             post {
+//               always {
+//                 sh 'docker logout'
+//                 sh "docker rmi igbasanmi/tesla-web-app:${env.BUILD_NUMBER}"
+//               }
+//             }
+//         }
         
         stage('deploy2kubernetes') {
             agent {
@@ -76,7 +76,7 @@ pipeline {
             }
             steps {
                 echo "deploying to k8s"
-                sh 'sed -i "s/{{ IMAGE_TAG }}/$KUBE_IMAGE/g" deployment.yaml'
+//                 sh 'sed -i "s/{{ IMAGE_TAG }}/$KUBE_IMAGE/g" deployment.yaml'
                 sh "kubectl apply -f deployment.yaml"
             }
             post{

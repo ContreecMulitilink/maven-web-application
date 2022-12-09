@@ -71,8 +71,12 @@ pipeline {
             agent {
               label 'master'
             }
+            environment {
+                KUBE_IMAGE="${env.BUILD_NUMBER}"  
+            }
             steps {
                 echo "deploying to k8s"
+                sed -i "s/{{ IMAGE_TAG }}/$KUBE_IMAGE/g"
                 sh "kubectl apply -f deployment.yaml"
             }
             post{

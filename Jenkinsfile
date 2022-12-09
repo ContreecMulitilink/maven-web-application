@@ -76,7 +76,9 @@ pipeline {
                 sh "kubectl apply -f deployment.yaml"
             }
             post{
-                cleanWs()
+                always {
+                   cleanWs()
+                } 
             }
         }
     }

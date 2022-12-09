@@ -17,7 +17,7 @@ spec:
         app: tesla-app
     spec:
       containers:
-      - image: igbasanmi/tesla-web-app:{{ IMAGE_TAG }}
+      - image: mylandmarktech/hello:4   #igbasanmi/tesla-web-app:{{ IMAGE_TAG }}
         name: tesla
         resources: {}
 status: {}
@@ -34,7 +34,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 80
   selector:
     app: tesla-app
 

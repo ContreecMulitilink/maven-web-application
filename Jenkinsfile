@@ -38,7 +38,7 @@ pipeline {
         
         stage('ImageBuild') {
             agent {
-              label 'test'
+              label 'master'
             }
             steps {
                 echo 'building docker image'
@@ -49,7 +49,7 @@ pipeline {
         
 //         stage('UploadImage') {
 //             agent {
-//               label 'test'
+//               label 'master'
 //             }
 //             steps {
 //                 // sh 'echo "SSH user is $DOCKER_CREDS_USR"'

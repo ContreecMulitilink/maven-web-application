@@ -58,7 +58,7 @@ pipeline {
         
         stage('deploy2kubernetes') {
             steps {
-                echo 'deploying to k8s"
+                echo "deploying to k8s"
                 sh "kubectl get pods -A"
             }
         }

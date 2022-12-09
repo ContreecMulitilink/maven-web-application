@@ -45,8 +45,8 @@ kind: Ingress
 metadata:
   creationTimestamp: null
   name: simple
-ingressClassName: nginx
 spec:
+  ingressClassName: nginx
   rules:
   - host: a9e100485f62d459e8b017fdc48b14dc-1523919885.us-east-2.elb.amazonaws.com
     http:

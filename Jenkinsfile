@@ -76,7 +76,7 @@ pipeline {
             }
             steps {
                 echo "deploying to k8s"
-                sh 'sed -i "s/{{ IMAGE_TAG }}/$KUBE_IMAGE/g"'
+                sh 'sed -i "s/{{ IMAGE_TAG }}/$KUBE_IMAGE/g" deployment.yaml'
                 sh "kubectl apply -f deployment.yaml"
             }
             post{

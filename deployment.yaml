@@ -45,6 +45,8 @@ kind: Ingress
 metadata:
   creationTimestamp: null
   name: simple
+annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:

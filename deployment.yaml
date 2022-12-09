@@ -17,7 +17,7 @@ spec:
         app: tesla-app
     spec:
       containers:
-      - image: igbasanmi/tesla-web-app
+      - image: igbasanmi/tesla-web-app:{{ IMAGE_TAG }}
         name: tesla
         resources: {}
 status: {}

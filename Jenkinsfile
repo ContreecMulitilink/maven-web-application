@@ -58,9 +58,8 @@ pipeline {
         
         stage('deploy2kubernetes') {
             steps {
-                echo 'deploying to k8s'
-                echo "my build number is ${env.BUILD_NUMBER}"
-                sh "docker build -t igbasanmi/tesla-web-app:${env.BUILD_NUMBER} ."
+                echo 'deploying to k8s"
+                sh "kubectl get pods -A"
             }
         }
     }
